@@ -1,0 +1,27 @@
+---
+interface Props {
+	languageMapping?: Record<string, string>;
+	showFlag?: boolean;
+	class?: string;
+	[x: string]: any;
+}
+
+const {
+	languageMapping = { en: "English", it: "Italiano" },
+	showFlag = true,
+	class: className,
+	...rest
+} = Astro.props;
+---
+
+<select
+	id="language-selector"
+	class:list={["rounded py-1 px-2 bg-slate-100 dark:bg-stone-950 cursor-pointer hover:bg-slate-200 dark:hover:bg-stone-900 transition", className]}
+	x-data="{ currentLang: localStorage.getItem('astro-i18next-lang') || 'en' }"
+	x-init="currentLang = currentLang || 'en'"
+	@change="localStorage.setItem('astro-i18next-lang', $el.value); window.location.reload()"
+	{...rest}>
+	{Object.entries(languageMapping).map(([code, label]) => (
+		<option value={code}>{label}</option>
+	))}
+</select>

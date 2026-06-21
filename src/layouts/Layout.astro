@@ -1,0 +1,62 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import Footer from "@components/footer.astro";
+import Navbar from "@components/navbar/navbar.astro";
+import "@fontsource-variable/inter";
+
+export interface Props {
+	title?: string;
+	lang?: string;
+}
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+
+const { title, lang = null } = Astro.props;
+
+const makeTitle = title
+	? `${title} | Subtle Astro`
+	: "Subtle Astro - Clean & Minimal Starter";
+---
+
+<!doctype html>
+<html lang={lang ?? "en"}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="theme-color" content="#ffffff" />
+
+		<ViewTransitions />
+
+		<!-- Global CSS -->
+		<link rel="stylesheet" href="/index.css" />
+
+		<title>{makeTitle}</title>
+
+		<script is:inline>
+			function handleThemeChange() {
+				if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+					document.documentElement.classList.add("dark");
+				} else {
+					document.documentElement.classList.remove("dark");
+				}
+			}
+			handleThemeChange();
+			document.removeEventListener("astro:after-swap", handleThemeChange);
+			document.addEventListener("astro:after-swap", handleThemeChange);
+		</script>
+	</head>
+	<body class="dark:bg-stone-950">
+		<Navbar />
+		<slot />
+		<Footer />
+		<style is:global>
+			/* Improve Page speed */
+			/* https://css-tricks.com/almanac/properties/c/content-visibility/ */
+			img {
+				content-visibility: auto;
+			}
+		</style>
+	</body>
+</html>
