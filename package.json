@@ -1,0 +1,59 @@
+{
+  "private": true,
+  "name": "@anyblades/build-awesome-starter",
+  "version": "0.9.7",
+  "type": "module",
+  "workspaces": [
+    "do"
+  ],
+  "scripts": {
+    "do": "ELTY_OPTIONS=\"--input=./site-${SITE:-tailwind} --config=./node_modules/@anyblades/eleventy-blades-base/eleventy.config.js\" TW_OPTIONS=\"--input=./site-${SITE:-tailwind}/styles.css --output=./_public/styles.css\" npm -w do run",
+    "start": "npm run do -- start",
+    "stage": "npm run do -- stage",
+    "build": "npm run do -- build",
+    "prebuild": "npm pkg delete overrides",
+    "start:blades": "SITE=blades npm run do -- start",
+    "stage:blades": "SITE=blades npm run do -- stage",
+    "build:blades": "SITE=blades npm run do -- build",
+    "start:simple": "SITE=simple npm run do -- start",
+    "stage:simple": "SITE=simple npm run do -- stage",
+    "build:simple": "SITE=simple npm run do -- build",
+    "dev": "npm pkg set overrides.'@anyblades/eleventy-blades'='file:../eleventy-blades' && npm install --install-links file:../eleventy-blades/packages/eleventy-blades-base",
+    "dev:dl": "curl https://raw.githubusercontent.com/anyblades/bladeswitch/refs/heads/main/admin/index.html -o ./_public/admin/index.html"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^4.0.0-alpha.7",
+    "@anyblades/eleventy-blades-base": "^0.2.0",
+    "@tailwindcss/cli": "^4.1.18",
+    "@tailwindcss/typography": "^0.5.19",
+    "tailwindcss": "^4.1.18"
+  },
+  "=== SITE GLOBALS": "===",
+  "site": {
+    "title": "Build Awesome Starter",
+    "description": "Modern, lightweight Eleventy v4 starter with Tailwind or Pico; Blades, CMS and multisiting 🥷",
+    "styles": [
+      "https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css",
+      "https://cdn.jsdelivr.net/npm/prismjs@1/plugins/treeview/prism-treeview.min.css",
+      "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7/css/all.min.css"
+    ],
+    "scripts": [
+      "https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js",
+      "https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js",
+      "https://cdn.jsdelivr.net/npm/prismjs@1/plugins/treeview/prism-treeview.min.js"
+    ],
+    "footer_contents": [
+      "Made with sharp [Blades](https://blades.ninja/)",
+      "© [*Any*digital](https://any.digital/) 2025–{{ year }}",
+      "<br> [![](https://img.shields.io/github/stars/anyblades/build-awesome-starter?label=🥷&logo=%20)](https://github.com/anyblades/build-awesome-starter)"
+    ]
+  },
+  "=== METADATA": "===",
+  "author": "Anton Staroverov",
+  "license": "MIT",
+  "=== DEV ONLY": "===",
+  "devDependencies": {
+    "prettier-plugin-jinja-template": "^2.1.0",
+    "serve": "^14.2.5"
+  }
+}

@@ -1,0 +1,10 @@
+{% set site = pkg.site | merge(site) | attr_set('styles', pkg.site.styles) | attr_concat('styles', site.styles) %}
+{% extends 'blades/html.njk' %}
+
+{% block body %}
+  <main class="container breakout-all"><br /><br />{{ content | safe }}</main>
+  <footer style="text-align: center">
+    <hr />
+    {{ site.footer_contents | join(' ') | renderContent('njk,md', site) | safe }}
+  </footer>
+{% endblock %}
